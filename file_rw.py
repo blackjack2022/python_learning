@@ -3,7 +3,7 @@ import json
 
 def create_file():
     try:
-        with open("README.md", "rb") as f1, open("readme.txt", "xb") as f2:
+        with open("README.md", "rb") as f1, open("tempfile/readme.txt", "xb") as f2:
             data = f1.read(10)
             while data:
                 f2.write(data)
@@ -28,10 +28,10 @@ def json_read():
             {'brand': 'Benz', 'max_speed': 280}
         ]
     }
-    with open('data.json', 'w') as file:
+    with open('tempfile/data.json', 'w') as file:
         json.dump(my_dict, file)
 
-    with open('data.json', 'r') as file:
+    with open('tempfile/data.json', 'r') as file:
         data = json.loads(file.read())
         print(data)
 
@@ -54,7 +54,7 @@ else:
 import csv
 import random
 
-with open('scores.csv', 'r+') as file:
+with open('tempfile/scores.csv', 'r+') as file:
     if len(file.read()) == 0:
         writer = csv.writer(file)
         writer.writerow(['姓名', '语文', '数学', '英语'])
@@ -64,5 +64,5 @@ with open('scores.csv', 'r+') as file:
             scores.insert(0, name)
             writer.writerow(scores)
 
-with open('scores.csv', 'r') as file:
+with open('tempfile/scores.csv', 'r') as file:
     print(file.read())

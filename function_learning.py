@@ -1,4 +1,7 @@
 # 强制固定位置参数，参数必须按照定义的顺序传递，/以前的都是强制位置参数
+import functools
+
+
 def static_pos_function(a, b, c, /, d, e):
     return a + b + c + d + e
 
@@ -52,7 +55,30 @@ def log_func(func):
 # 这里是语法糖，这种写法等于get_sum=log_func(get_sum)
 @log_func
 def get_sum(*args):
-    return sum(v for v in args if v in (int, float))
+    return sum(v for v in args if isinstance(v, (int, float)))
+
+
+print(f'sum={get_sum(1, 2, 3)}')
+
+
+# 带参数的装饰器
+def log_param(param):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            print(f"调用函数前:{param}")
+            result = func(*args, **kwargs)
+            print(f"调用函数后:{param*2}")
+            return result
+
+        return wrapper
+
+    return decorator
+
+
+@log_param('hello')
+def get_sum(*args):
+    return sum(v for v in args if isinstance(v, (int, float)))
 
 
 print(f'sum={get_sum(1, 2, 3)}')
